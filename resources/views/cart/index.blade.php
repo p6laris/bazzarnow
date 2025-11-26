@@ -36,13 +36,13 @@
             <div class="flex items-center gap-4 text-xs font-medium text-neutral-400">
                 <a href="{{ route('products.index') }}" class="inline-flex items-center gap-1 hover:text-neutral-100 transition">
                     {{-- change this icon (shop) --}}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"><!-- Icon from Fluent UI System Icons by Microsoft Corporation - https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE --><path fill="currentColor" d="M6 4.5V6H5a1 1 0 0 0-1 1v8q0 .625.235 1.172q.234.539.648.953A3 3 0 0 0 7 18h4.764A3 3 0 0 1 11 16V4.5a2.5 2.5 0 0 0-.328-1.242Q11.039 3 11.5 3q.312 0 .586.117a1.48 1.48 0 0 1 .797.797Q13 4.187 13 4.5V6h-1v10a2 2 0 1 0 4 0V7a1 1 0 0 0-1-1h-1V4.5q0-.516-.195-.969A2.48 2.48 0 0 0 11.5 2a2.44 2.44 0 0 0-1.492.508a2.5 2.5 0 0 0-.703-.375A2.4 2.4 0 0 0 8.5 2q-.516 0-.969.195q-.46.195-.797.539q-.344.336-.539.797Q6 3.984 6 4.5m1 0q0-.312.117-.586a1.48 1.48 0 0 1 .797-.797Q8.188 3 8.5 3t.586.117a1.48 1.48 0 0 1 .797.797Q10 4.187 10 4.5V6H7z"/></svg>
+                    <span>🛍️</span>
                     <span>Shop</span>
                 </a>
 
                 <span class="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-950/80 px-3 py-1">
                     {{-- change this icon (cart) --}}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"><!-- Icon from Fluent UI System Icons by Microsoft Corporation - https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE --><path fill="currentColor" d="M2.997 3.496a.5.5 0 0 1 .5-.5h.438c.727 0 1.145.473 1.387.945c.165.323.284.717.383 1.059H16a1 1 0 0 1 .962 1.272l-1.496 5.275A2 2 0 0 1 13.542 13H8.463a2 2 0 0 1-1.93-1.473l-.642-2.355l-.01-.032l-1.03-3.498l-.1-.337c-.1-.346-.188-.652-.32-.909c-.159-.31-.305-.4-.496-.4h-.438a.5.5 0 0 1-.5-.5M8.5 17a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m5 0a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3"/></svg>
+                    <span>🛒</span>
                     <span>{{ $cartCount }} item{{ $cartCount === 1 ? '' : 's' }}</span>
                 </span>
 
@@ -105,11 +105,19 @@
                         </div>
 
                         <div class="mt-4 border-t border-neutral-900 pt-3 flex items-center justify-between text-[11px]">
-                            <a href="{{ $dashboardRoute }}" class="inline-flex items-center gap-1 hover:text-neutral-100 transition">
-                                {{-- change this icon (dashboard) --}}
-                                <span>📂</span>
-                                <span>Profile / Dashboard</span>
-                            </a>
+                            <div class="flex flex-col gap-1">
+                                <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-1 hover:text-neutral-100 transition">
+                                    {{-- change this icon (profile) --}}
+                                    <span>⚙️</span>
+                                    <span>Profile</span>
+                                </a>
+
+                                <a href="{{ $dashboardRoute }}" class="inline-flex items-center gap-1 hover:text-neutral-100 transition">
+                                    {{-- change this icon (dashboard) --}}
+                                    <span>📂</span>
+                                    <span>Dashboard</span>
+                                </a>
+                            </div>
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

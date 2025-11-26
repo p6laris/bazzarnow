@@ -33,7 +33,8 @@
                     href="{{ auth()->check() ? route('cart.index') : route('login') }}"
                     class="relative inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-950/80 px-3 py-1 hover:border-neutral-200 hover:text-neutral-100 transition"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"><!-- Icon from Fluent UI System Icons by Microsoft Corporation - https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE --><path fill="currentColor" d="M2.997 3.496a.5.5 0 0 1 .5-.5h.438c.727 0 1.145.473 1.387.945c.165.323.284.717.383 1.059H16a1 1 0 0 1 .962 1.272l-1.496 5.275A2 2 0 0 1 13.542 13H8.463a2 2 0 0 1-1.93-1.473l-.642-2.355l-.01-.032l-1.03-3.498l-.1-.337c-.1-.346-.188-.652-.32-.909c-.159-.31-.305-.4-.496-.4h-.438a.5.5 0 0 1-.5-.5M8.5 17a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m5 0a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3"/></svg>
+                    {{-- change this icon (cart) --}}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"><!-- Icon from Fluent UI System Icons by Microsoft Corporation - https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE --><path fill="currentColor" d="M2.997 3.496a.5.5 0 0 1 .5-.5h.438c.727 0 1.145.473 1.387.945c.165.323.284.717.383 1.059H16a1 1 0 0 1 .962 1.272l-1.496 5.275A2 2 0 0 1 13.542 13H8.463a2 2 0 0 1-1.93-1.473l-.642-2.355l-.01-.032l-1.03-3.498l-.1-.337c-.1-.346-.188-.652-.32-.909c-.159-.31-.305-.4-.496-.4h-.438a.5.5 0 0 1-.5-.5M8.5 17a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m5 0a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3"/></svg>
                     <span>Cart</span>
                     @if (!empty($cartCount) && $cartCount > 0)
                         <span class="inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-neutral-100 text-neutral-900 text-[10px] font-semibold px-1">
@@ -45,10 +46,11 @@
                 {{-- Auth --}}
                 @auth
                     @php
-                        $user    = auth()->user();
-                        $initial = mb_strtoupper(mb_substr($user->name, 0, 1));
-                        $avatar  = $user->profile_image_path ? asset('storage/' . $user->profile_image_path) : null;
+                        $user           = auth()->user();
+                        $initial        = mb_strtoupper(mb_substr($user->name, 0, 1));
+                        $avatar         = $user->profile_image_path ? asset('storage/' . $user->profile_image_path) : null;
                         $dashboardRoute = $user->is_admin ? route('admin.dashboard') : route('dashboard');
+                        $purchasedCount = $purchasedCount ?? 0;
                     @endphp
 
                     <div class="relative">
@@ -72,6 +74,7 @@
                                     {{ $user->is_admin ? 'Admin' : 'Customer' }}
                                 </span>
                             </div>
+                            {{-- change this icon (chevron) --}}
                             <span class="text-[10px] text-neutral-500">▾</span>
                         </button>
 
@@ -121,21 +124,31 @@
                                         Purchased
                                     </p>
                                     <p class="text-sm text-neutral-50 font-semibold">
-                                        {{ $purchasedCount ?? 0 }}
+                                        {{ $purchasedCount }}
                                     </p>
                                 </div>
                             </div>
 
                             <div class="mt-4 border-t border-neutral-900 pt-3 flex items-center justify-between text-[11px]">
-                                <a href="{{ $dashboardRoute }}" class="inline-flex items-center gap-1 hover:text-neutral-100 transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"><!-- Icon from Fluent UI System Icons by Microsoft Corporation - https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE --><path fill="currentColor" d="M5 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1zm0 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1zm6-6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm0 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM2 5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3zm3-2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg>
-                                <span>Profile / Dashboard</span>
-                                </a>
+                                <div class="flex flex-col gap-1">
+                                    <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-1 hover:text-neutral-100 transition">
+                                        {{-- change this icon (profile) --}}
+                                        <span>⚙️</span>
+                                        <span>Profile</span>
+                                    </a>
+
+                                    <a href="{{ $dashboardRoute }}" class="inline-flex items-center gap-1 hover:text-neutral-100 transition">
+                                        {{-- change this icon (dashboard) --}}
+                                        <span>📂</span>
+                                        <span>Dashboard</span>
+                                    </a>
+                                </div>
 
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="inline-flex items-center gap-1 text-neutral-500 hover:text-neutral-100 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><!-- Icon from Fluent UI System Icons by Microsoft Corporation - https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE --><path fill="currentColor" d="M12 4.354v6.65h7.442L17.72 9.28a.75.75 0 0 1-.073-.977l.073-.084a.75.75 0 0 1 .976-.072l.084.072l2.997 2.998a.75.75 0 0 1 .073.976l-.073.084l-2.996 3.003a.75.75 0 0 1-1.134-.975l.072-.084l1.713-1.717h-7.431L12 19.25a.75.75 0 0 1-.88.738l-8.5-1.501a.75.75 0 0 1-.62-.739V5.75a.75.75 0 0 1 .628-.74l8.5-1.396a.75.75 0 0 1 .872.74m-3.498 7.145a1.002 1.002 0 1 0 0 2.005a1.002 1.002 0 0 0 0-2.005M13 18.502h.765l.102-.007a.75.75 0 0 0 .648-.744l-.007-4.25H13zM13.002 10L13 8.725V5h.745a.75.75 0 0 1 .743.647l.007.101l.007 4.252z"/></svg>
+                                        {{-- change this icon (logout) --}}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><!-- Icon from Fluent UI System Icons by Microsoft Corporation - https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE --><path fill="currentColor" d="M12 4.354v6.65h7.442L17.72 9.28a.75.75 0 0 1-.073-.977l.073-.084a.75.75 0 0 1 .976-.072l.084.072l2.997 2.998a.75.75 0 0 1 .073.976l-.073.084l-2.996 3.003a.75.75 0 0 1-1.134-.975l.072-.084l1.713-1.717h-7.431L12 19.25a.75.75 0 0 1-.88.738l-8.5-1.501a.75.75 0 0 1-.62-.739V5.75a.75.75 0 0 1 .628-.74l8.5-1.396a.75.75 0 0 1 .872.74m-3.498 7.145a1.002 1.002 0 1 0 0 2.005a1.002 1.002 0 0 0 0-2.005M13 18.502h.765l.102-.007a.75.75 0 0 0 .648-.744l-.007-4.25H13zM13.002 10L13 8.725V5h.745a.75.75 0 0 1 .743.647l.007.101l.007 4.252z"/></svg>
                                         <span>Logout</span>
                                     </button>
                                 </form>
@@ -146,10 +159,12 @@
 
                 @guest
                     <a href="{{ route('login') }}" class="inline-flex items-center gap-1 hover:text-neutral-100 transition">
+                        {{-- change this icon (login) --}}
                         <span>🔐</span>
                         <span>Login</span>
                     </a>
                     <a href="{{ route('register') }}" class="inline-flex items-center gap-1 hover:text-neutral-100 transition">
+                        {{-- change this icon (register) --}}
                         <span>🧾</span>
                         <span>Register</span>
                     </a>
@@ -193,6 +208,7 @@
         {{-- CATEGORY FILTERS --}}
         <section class="mb-8">
             @php
+                $activeCategory = request('category');
                 $labels = [
                     'skincare'  => 'Skincare',
                     'fragrance' => 'Fragrance',
@@ -226,10 +242,16 @@
         @if ($products->count())
             <section class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 @foreach ($products as $product)
+                    @php
+                        $img = $product->image_path
+                            ? asset('storage/' . $product->image_path)
+                            : $product->image_url;
+                    @endphp
+
                     <article class="group rounded-2xl border border-neutral-800/80 bg-neutral-950/80 overflow-hidden shadow-[0_0_0_1px_rgba(255,255,255,0.02)] hover:border-neutral-100/40 hover:shadow-[0_0_30px_rgba(255,255,255,0.06)] transition-all duration-200">
                         <div class="aspect-square overflow-hidden bg-neutral-900">
                             <img
-                                src="{{ $product->image_url }}"
+                                src="{{ $img }}"
                                 alt="{{ $product->name }}"
                                 class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
                             >
@@ -245,46 +267,45 @@
                                 </span>
                             </div>
 
-                            {{-- Rating display + user rating control --}}
-                            <div class="flex flex-col gap-1 text-[11px] text-neutral-400">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-1">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $product->rating)
-                                                <span class="text-neutral-50">★</span>
-                                            @else
-                                                <span class="text-neutral-700">★</span>
-                                            @endif
-                                        @endfor
-                                        <span class="ml-1 text-neutral-500">
-                                            {{ $product->rating }}/5
-                                        </span>
-                                    </div>
+                            {{-- Rating display --}}
+                            <div class="flex items-center justify-between text-[11px] text-neutral-400">
+                                <div class="flex items-center gap-1">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= (int)$product->rating)
+                                            <span class="text-neutral-50">★</span>
+                                        @else
+                                            <span class="text-neutral-700">★</span>
+                                        @endif
+                                    @endfor
+                                    <span class="ml-1 text-neutral-500">
+                                        {{ $product->rating }}/5
+                                    </span>
                                 </div>
-
-                                @auth
-                                    <form
-                                        method="POST"
-                                        action="{{ route('products.rate', $product) }}"
-                                        class="flex items-center gap-1 text-[10px] text-neutral-500"
-                                    >
-                                        @csrf
-                                        <span class="mr-1">Rate:</span>
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            <button
-                                                type="submit"
-                                                name="rating"
-                                                value="{{ $i }}"
-                                                class="px-[5px] py-[1px] rounded-full border border-transparent hover:border-neutral-500 hover:bg-neutral-900 text-xs {{ $product->rating === $i ? 'text-neutral-50' : 'text-neutral-500' }}"
-                                            >
-                                                ★
-                                            </button>
-                                        @endfor>
-                                    </form>
-                                @endauth
                             </div>
 
-                            <div class="flex items-center justify-between gap-2 mt-1">
+                            {{-- (Optional) Rating form for users --}}
+                            @auth
+                                <form
+                                    method="POST"
+                                    action="{{ route('products.rate', $product) }}"
+                                    class="flex items-center gap-1 text-[10px] text-neutral-500"
+                                >
+                                    @csrf
+                                    <span class="mr-1">Rate:</span>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <button
+                                            type="submit"
+                                            name="rating"
+                                            value="{{ $i }}"
+                                            class="px-[5px] py-[1px] rounded-full border border-transparent hover:border-neutral-500 hover:bg-neutral-900 text-xs {{ (int)$product->rating === $i ? 'text-neutral-50' : 'text-neutral-500' }}"
+                                        >
+                                            ★
+                                        </button>
+                                    @endfor
+                                </form>
+                            @endauth
+
+                            <div class="flex items-center justify-between gap-2 mt-2">
                                 <div class="text-sm font-semibold text-neutral-50">
                                     ${{ number_format($product->price / 100, 2) }}
                                 </div>
@@ -296,8 +317,9 @@
 
                                 <button
                                     type="submit"
-                                    class="w-full inline-flex items-center justify-center rounded-xl border border-neutral-700 bg-neutral-900 px-3 py-2 text-xs font-medium tracking-wide text-neutral-100 hover:bg-neutral-50 hover:text-neutral-950 hover:border-neutral-50 active:scale-[0.98] transition-transform duration-150">
-                                    Add to cart
+                                    class="w-full inline-flex items-center justify-center rounded-xl border border-neutral-700 bg-neutral-900 px-3 py-2 text-xs font-medium tracking-[0.16em] uppercase text-neutral-100 hover:bg-neutral-50 hover:text-neutral-950 hover:border-neutral-50 active:scale-[0.98] transition-transform duration-150">
+                                    {{-- change this icon (add to cart) --}}
+                                    🛒 Add to cart
                                 </button>
                             </form>
                         </div>
@@ -305,19 +327,21 @@
                 @endforeach
             </section>
 
-            {{-- PAGINATION --}}
+            {{-- PAGINATION (inline monochrome, no view) --}}
             @if ($products->hasPages())
                 <div class="mt-10 flex justify-center">
-                    <nav class="inline-flex items-center gap-4 text-xs text-neutral-400" aria-label="Pagination">
+                    <nav class="inline-flex items-center gap-3 text-xs text-neutral-400" aria-label="Pagination">
                         <span class="hidden sm:inline-flex items-center px-3 py-1 rounded-full border border-neutral-800 bg-neutral-950/80">
                             Page
                             <span class="mx-1 text-neutral-100">{{ $products->currentPage() }}</span>
                             of
                             <span class="ml-1 text-neutral-100">{{ $products->lastPage() }}</span>
                         </span>
+
                         <div class="inline-flex items-center gap-2">
+                            {{-- Prev --}}
                             @if ($products->onFirstPage())
-                                <span class="px-3 py-1 rounded-full border border-neutral-800 bg-neutral-950/60 text-neutral-600 cursor-not-allowed">
+                                <span class="px-3 py-1 rounded-full border border-neutral-900 bg-neutral-950/60 text-neutral-600 cursor-not-allowed">
                                     Prev
                                 </span>
                             @else
@@ -329,6 +353,7 @@
                                 </a>
                             @endif
 
+                            {{-- Next --}}
                             @if ($products->hasMorePages())
                                 <a
                                     href="{{ $products->nextPageUrl() }}"
@@ -337,7 +362,7 @@
                                     Next
                                 </a>
                             @else
-                                <span class="px-3 py-1 rounded-full border border-neutral-800 bg-neutral-950/60 text-neutral-600 cursor-not-allowed">
+                                <span class="px-3 py-1 rounded-full border border-neutral-900 bg-neutral-950/60 text-neutral-600 cursor-not-allowed">
                                     Next
                                 </span>
                             @endif
